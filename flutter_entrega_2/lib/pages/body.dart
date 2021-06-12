@@ -16,7 +16,13 @@ class _bodyState extends State<body> {
           children: [
             SizedBox(height: 200),
             Text('Patente'),
-            TextField(),
+            TextField(
+              decoration: InputDecoration(
+                helperText: 'asdsad',
+                hintText: 'FFFF',
+                border: OutlineInputBorder(),
+              ),
+            ),
             SizedBox(height: 100),
             Text('Marca'),
             SizedBox(height: 100),
