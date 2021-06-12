@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_entrega_2/pages/body.dart';
 
-class Lista extends StatefulWidget {
+class List extends StatefulWidget {
   static String id = 'Listado';
 
   @override
-  _ListaState createState() => _ListaState();
+  _ListState createState() => _ListState();
 }
 
-class _ListaState extends State<Lista> {
+class _ListState extends State<List> {
   @override
   Widget build(BuildContext context) {
     return Container(

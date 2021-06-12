@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Body.id,
       routes: {
         Body.id: (context) => Body(),
-        Lista.id:(context) =>Lista(),
+        List.id:(context) =>List(),
       },
     );
   }

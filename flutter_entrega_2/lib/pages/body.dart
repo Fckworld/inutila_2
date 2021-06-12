@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_entrega_2/models/car.dart';
 import 'package:flutter_entrega_2/pages/list.dart';
-
-import 'DBHelper.dart';
 
 class Body extends StatefulWidget {
   static String id = 'Body';
@@ -12,93 +9,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final formKey = new GlobalKey<FormState>();
-  TextEditingController controller = TextEditingController();
-  String marca;
-  var dbHelper;
-  bool isUpdating;
-  Future<List<Car>> cars;
-  String patente;
-  String precio;
-  int curCarId;
-
-  @override
-  void initState() {
-    super.initState();
-    dbHelper = DBHelper();
-    isUpdating = false;
-    refreshList();
-  }
-
-  refreshList() {
-    setState(() {
-      cars = dbHelper.getCars();
-    });
-  }
-
-  clearName() {
-    controller.text = '';
-  }
-
-  validate() {
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-      if (isUpdating) {
-        Car e = Car(curCarId, patente, marca, precio);
-        dbHelper.update(e);
-        setState(() {
-          isUpdating = false;
-        });
-      } else {
-        Car e = Car(null, patente, marca, precio);
-        dbHelper.save(e);
-      }
-      clearName();
-      refreshList();
-    }
-  }
-
-  form() {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: EdgeInsets.all(15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          verticalDirection: VerticalDirection.down,
-          children: <Widget>[
-            TextFormField(
-              controller: controller,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: 'Patente'),
-              validator: (val) => val.length == 0 ? 'Ingrese nombre' : null,
-              onSaved: (val) => marca = val,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: validate,
-                  child: Text(isUpdating ? 'UPDATE' : 'ADD'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      isUpdating = false;
-                    });
-                    clearName();
-                  },
-                  child: Text('CANCEL'),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +75,7 @@ class _BodyState extends State<Body> {
       child: ElevatedButton(
         style: ButtonStyle(),
         onPressed: () {
-          Navigator.pushNamed(context, Lista.id);
+          Navigator.pushNamed(context, List.id);
         },
         child: Text(
           a,
