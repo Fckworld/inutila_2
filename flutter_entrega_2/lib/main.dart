@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_entrega_2/pages/body.dart';
+import 'package:flutter_entrega_2/pages/list.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: body(),
+      home: Body(),
+      initialRoute: Body.id,
+      routes: {
+        Body.id: (context) => Body(),
+        List.id:(context) =>List(),
+      },
     );
   }
 }
