@@ -99,6 +99,64 @@ class _BodyState extends State<Body> {
     );
   }
 
+  list() {
+    return Expanded(
+      child: FutureBuilder(
+        future: cars,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return dataTable(snapshot.data);
+          }
+
+          if (null == snapshot.data || snapshot.data.length == 0) {
+            return Text("No Data Found");
+          }
+
+          return CircularProgressIndicator();
+        },
+      ),
+    );
+  }
+
+  SingleChildScrollView dataTable(List<Car> cars) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: [
+          DataColumn(
+            label: Text('MARCA'),
+          ),
+          DataColumn(
+            label: Text('BORRAR'),
+          )
+        ],
+        rows: cars
+            .map(
+              (car) => DataRow(cells: [
+                DataCell(
+                  Text(car.marca), //QUIZAS TENGA QUE AGREGAS ,AS CAMPOS
+                  onTap: () {
+                    setState(() {
+                      isUpdating = true;
+                      curCarId = car.id;
+                    });
+                    controller.text = car.marca;
+                  },
+                ),
+                DataCell(IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    dbHelper.delete(car.id);
+                    refreshList();
+                  },
+                )),
+              ]),
+            )
+            .toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +165,8 @@ class _BodyState extends State<Body> {
             width: 200,
             child: Column(
               children: [
-                textoYBoton('Patente'),
+                Text('Patente'),
+                form(),
                 textoYBoton('Marca'),
                 textoYBoton('Precio'),
                 SizedBox(
